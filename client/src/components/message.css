@@ -1,0 +1,17 @@
+.message-container {
+    height: 10%;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: black;
+}
+
+.message {
+    font-size: 14px;
+}
+.date {
+    font-size: 12px;
+}
