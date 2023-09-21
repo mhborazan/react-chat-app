@@ -10,6 +10,11 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+// const users = {};
+// const colors = [
+//   ["#4b494c", "#b3c2ce"],
+//   ["#357315", "white"],
+// ];
 
 app.get("/", (req, res) => {
   //res.sendFile("C:\\Users\\Hakan\\react-chat-app\\server\\index.html");
@@ -22,7 +27,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+    io.emit("chat message", { msg: msg, id: socket.id });
   });
 });
 

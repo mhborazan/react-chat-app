@@ -6,6 +6,7 @@ const socket = io("http://localhost:3000");
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
+  const [id, setId] = useState();
   const inputRef = useRef();
   const [input, setInput] = useState("");
   const onSubmit = (event) => {
@@ -24,6 +25,7 @@ export default function Chat() {
 
   useEffect(() => {
     socket.connect();
+    setId(socket.id);
 
     return () => {
       socket.disconnect();
@@ -32,10 +34,9 @@ export default function Chat() {
 
   useEffect(() => {
     function onMessage(value) {
-      console.log("log", value);
       setMessages([...messages, value]);
     }
-
+    setId(socket.id);
     socket.on("chat message", onMessage);
 
     return () => {
@@ -47,11 +48,13 @@ export default function Chat() {
       <div className="container">
         <div className="chat-area">
           {messages.map((e, i) => {
+            console.log("id", id, "e.id", e.id);
             return (
               <Message
-                message={e.message}
-                date={e.date}
-                bg={i % 2 == 0 ? null : "pink"}
+                message={e.msg.message}
+                date={e.msg.date}
+                me={id == e.id}
+                key={i}
               />
             );
           })}
